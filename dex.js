@@ -1,22 +1,24 @@
 // connect to Moralis server
-  
+//Server URL and App ID provided by Moralis 
 const serverUrl = "https://qwooohemv7mx.usemoralis.com:2053/server";
 const appId = "yJQGfOU6Ln8elubJJVnTEpSMeAfxtVOqEzUmuhr4";
 Moralis.start({ serverUrl, appId });
 
-Moralis.initPlugins().then(() => console.log("Plugins initialized"));
+//Initializing Plugins
+Moralis
+    .initPlugins()
+    .then(() => console.log("Plugins initialized"));
 
 const $tokenBalanceTBody = document.querySelector(".js-token-balances");
 const $selectedToken = document.querySelector(".js-from-token");
 const $amountInput = document.querySelector("js-from-amount");
 
-//utilities
+/*utilities*/
 //Converting from Wei using custom function
 const tokenValue = (value, decimals) =>
     (decimals ? value / Math.pow(10, decimals) : value);
 
 //Metamask login
-
 async function login() {
     let user = Moralis.User.current();
     if (!user) {
@@ -79,11 +81,10 @@ async function logOut() {
 // Event listener for buttons Login, Logout, Buy Crypto
 
 document.querySelector("#btn-login").addEventListener("click", login);
-document.querySelector("#btn-buy-crypto").addEventListener("click", buyCrypto);
-document.querySelector("#btn-logout").addEventListener("click", logOut);
+document.getElementById("btn-buy-crypto").addEventListener("click", buyCrypto);
+document.getElementById("btn-logout").addEventListener("click", logOut);
 
 // Quote / Swap
-
 async function formSubmitted(event){
     event.preventDefault();
     const fromAmount = Number.parseFloat($amountInput.value);
@@ -101,7 +102,7 @@ async function formSubmitted(event){
     const fromDecimals = $selectedToken.dataset.decimals;
     const fromAddress =  $selectedToken.dataset.address;
 
-    const [toAddress, toDecimals] = document.querySelector("[name=to-token").value.split("-");
+    const [toAddress, toDecimals] = document.querySelector("[name=to-token]").value.split("-");
 
     try{
         const quote = await Moralis.Plugins.oneInch.quote({
@@ -114,7 +115,11 @@ async function formSubmitted(event){
         const toAmount = tokenValue(quote.toTokenAmount, toDecimals);
         
         document.querySelector(".js-quote-container").innerHTML = `
-            <p>${fromAmount} ${quote.fromToken.symbol} = ${toAmount} ${quote.toToken.symbol}</p>
+            <p>
+                ${fromAmount} ${quote.fromToken.symbol} = 
+                ${toAmount} ${quote.toToken.symbol}
+            </p>
+
             <p> Estimated Gas: ${quote.estimatedGas}<p>
         `;
 
@@ -147,7 +152,7 @@ document.querySelector(".js-cancel").addEventListener("click", formCanceled);
 
 //Coinpaprika API
 async function getTop10Tokens(){
-    const response = await fetch("https://api.coinpaprika.com/v1/coins")
+    const response = await fetch("https://api.coinpaprika.com/v1/coins");
     const tokens = await response.json();
 
     return tokens
@@ -162,7 +167,6 @@ async function getTokenData(tickerList){
         chain: 'polygon', // The blockchain you want to use (eth/bsc/polygon)
     });
     console.log(tokens);
-    
 
     const tokenList = Object.values(tokens.tokens);
 
@@ -171,13 +175,12 @@ async function getTokenData(tickerList){
 
 function renderTokenDropdown(tokens){
     const options = tokens.map(token => 
-        `<option value="${token.address}-${token.decimals}">${token.name} (${token.symbol})
+        `<option value="${token.address}-${token.decimals}"> 
+        ${token.name} (${token.symbol})
         </option>`
     ).join("");
 
-    document.querySelector(`[name=from-token]`).innerHTML = options;
     document.querySelector(`[name=to-token]`).innerHTML = options;
-    document.querySelector(".js-submit-quote").removeAttribute("disabled");
 }
 
 
