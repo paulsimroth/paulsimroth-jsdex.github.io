@@ -1,7 +1,7 @@
 // connect to Moralis server
 //Server URL and App ID provided by Moralis 
-const serverUrl = "https://qwooohemv7mx.usemoralis.com:2053/server";
-const appId = "yJQGfOU6Ln8elubJJVnTEpSMeAfxtVOqEzUmuhr4";
+const serverUrl = "SERVER_URL";
+const appId = "APP_ID";
 Moralis.start({ serverUrl, appId });
 
 //Initializing Plugins
@@ -18,7 +18,7 @@ const $amountInput = document.querySelector("js-from-amount");
 const tokenValue = (value, decimals) =>
     (decimals ? value / Math.pow(10, decimals) : value);
 
-//Metamask login
+//Metamask login/logout
 async function login() {
     let user = Moralis.User.current();
     if (!user) {
@@ -28,6 +28,15 @@ async function login() {
     getStats();
 }
 
+async function logOut() {
+    await Moralis.User.logOut();
+    console.log("logged out");
+}
+
+document.querySelector("#btn-login").addEventListener("click", login);
+document.querySelector("#btn-logout").addEventListener("click", logOut);
+
+//Initialize Swap Form
 async function initSwapForm(event){
     event.preventDefault();
     $selectedToken.innerText = event.target.dataset.symbol;
@@ -42,16 +51,20 @@ async function initSwapForm(event){
     document.querySelector(".js-amount-error").innerText = "";
 }
 
+//Get stats from user
 async function getStats(){
+
     const balances = await Moralis.Web3API.account.getTokenBalances({chain: "polygon"});
     console.log(balances);
+
     $tokenBalanceTBody.innerHTML = balances.map((token, index) => `
         <tr>
             <td>${index + 1}</td>
             <td>${token.symbol}</td>
             <td>${tokenValue(token.balance, token.decimals)}</td>
             <td>
-                <button class="js-swap btn btn-primary" 
+                <button 
+                    class="js-swap btn btn-primary" 
                     data-address="${token.token_address}"
                     data-symbol="${token.symbol}"
                     data-decimals="${token.decimals}"
@@ -73,16 +86,7 @@ async function buyCrypto(){
     Moralis.Plugins.fiat.buy();
 }
 
-async function logOut() {
-    await Moralis.User.logOut();
-    console.log("logged out");
-}
-
-// Event listener for buttons Login, Logout, Buy Crypto
-
-document.querySelector("#btn-login").addEventListener("click", login);
 document.getElementById("btn-buy-crypto").addEventListener("click", buyCrypto);
-document.getElementById("btn-logout").addEventListener("click", logOut);
 
 // Quote / Swap
 async function formSubmitted(event){
@@ -130,7 +134,6 @@ async function formSubmitted(event){
     }
 }
 
-
 async function formCanceled(event){
     event.preventDefault();
     document.querySelector(".js-submit").setAttribute("disabled", "");
@@ -156,10 +159,9 @@ async function getTop10Tokens(){
     const tokens = await response.json();
 
     return tokens
-        .filter(token => token.rank >= 1 && token.rank <= 50)
+        .filter(token => token.rank >= 1 && token.rank <= 10)
         .map(token => token.symbol);
 }
-
 
 //1 inch API with Moralis plugin
 async function getTokenData(tickerList){
@@ -183,6 +185,15 @@ function renderTokenDropdown(tokens){
     document.querySelector(`[name=to-token]`).innerHTML = options;
 }
 
+/* Check if user is connected, IF true, execute stats */
+function isUserConnected() {
+    let user = Moralis.User.current();
+    if (user) {
+        getStats();
+    }
+}
+
+isUserConnected()
 
 getTop10Tokens()
     .then(getTokenData)
