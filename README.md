@@ -1,6 +1,14 @@
-# paulsimroth.github.io
+# paulsimroth-jsdex.github.io
 
 This DEX Frontend was built as part of the course "Javascript for Blockchain Developers"at Moralis Academy.
 It was built using the Coinpaprika API for getting data on the top ranked coins.
 
 Furthermore we made use of the servers provided by Moralis aswell as a Plug in for a Fiat onramp and the Plug in for the 1inch API to perform swaps.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
