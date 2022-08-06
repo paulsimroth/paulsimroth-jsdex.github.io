@@ -1,4 +1,4 @@
-# paulsimroth-jsdex.github.io
+# paulsimroth.github.io/jsdex_frontend/
 
 This DEX Frontend was built as part of the course "Javascript for Blockchain Developers"at Moralis Academy.
 It was built using the Coinpaprika API for getting data on the top ranked coins.
