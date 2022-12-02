@@ -1,6 +1,6 @@
 
-async function getTop10Tokens(){
-    const response = await fetch('https://pro-api.coinmarketcap.com/v1/cryptocurrency/map', process.env.API_KEY)
+async function getTopTokens(){
+    const response = await fetch("https://api.coinpaprika.com/v1/coins")
     const tokens = await response.json();
     console.log("API response", tokens);
 
@@ -84,7 +84,7 @@ walletButton.addEventListener('click', async() => {
     .querySelector(".js-submit-quote")
     .addEventListener("click", formSubmitted); */
 
-getTop10Tokens()
+getTopTokens()
     .then(getTokenData)
     .then(renderForm);
     
