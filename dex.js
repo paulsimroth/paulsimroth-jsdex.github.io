@@ -1,7 +1,8 @@
 
 async function getTop10Tokens(){
-    const response = await fetch("https://api.coinpaprika.com/v1/coins")
+    const response = await fetch('https://api.coinpaprika.com/v1/coins')
     const tokens = await response.json();
+    console.log("API response", tokens);
 
     return tokens
         .filter(token => token.rank >= 1 && token.rank <= 50)
@@ -9,7 +10,7 @@ async function getTop10Tokens(){
 };
 
 async function getTokenData(tickerList){
-    const response = await fetch("https://api.1inch.exchange/v4.0/1/tokens");
+    const response = await fetch("https://api.1inch.exchange/v5.0/1/tokens");
     const tokens = await response.json();
     const tokenList = Object.values(tokens.tokens);
 
@@ -35,7 +36,7 @@ async function formSubmitted(event){
     const fromUnit = 10 ** fromDecimals;
     const decimalRatio = 10 ** (toDecimals -fromDecimals);
 
-    const url = `https://api.1inch.io/v4.0/1/quote?fromTokenAddress=${fromAddress}&toTokenAddress=${toAddress}&amount=${fromUnit}`;
+    const url = `https://api.1inch.io/v5.0/1/quote?fromTokenAddress=${fromAddress}&toTokenAddress=${toAddress}&amount=${fromUnit}`;
     
     try{
         const response = await fetch(url);
