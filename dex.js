@@ -1,6 +1,6 @@
 
 async function getTop10Tokens(){
-    const response = await fetch('https://api.coinpaprika.com/v1/coins')
+    const response = await fetch('https://pro-api.coinmarketcap.com/v1/cryptocurrency/map', process.env.API_KEY)
     const tokens = await response.json();
     console.log("API response", tokens);
 
@@ -12,6 +12,7 @@ async function getTop10Tokens(){
 async function getTokenData(tickerList){
     const response = await fetch("https://api.1inch.exchange/v5.0/1/tokens");
     const tokens = await response.json();
+    console.log("API response, getTokeData", tokens);
     const tokenList = Object.values(tokens.tokens);
 
     return tokenList.filter(token => tickerList.includes(token.symbol));
@@ -79,9 +80,9 @@ walletButton.addEventListener('click', async() => {
     };
 });
 
-document
+/* document
     .querySelector(".js-submit-quote")
-    .addEventListener("click", formSubmitted);
+    .addEventListener("click", formSubmitted); */
 
 getTop10Tokens()
     .then(getTokenData)
