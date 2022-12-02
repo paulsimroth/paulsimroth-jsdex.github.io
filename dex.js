@@ -1,4 +1,4 @@
-let provider, signer, instance, user, address;
+
 async function getTop10Tokens(){
     const response = await fetch("https://api.coinpaprika.com/v1/coins")
     const tokens = await response.json();
@@ -7,8 +7,6 @@ async function getTop10Tokens(){
         .filter(token => token.rank >= 1 && token.rank <= 50)
         .map(token => token.symbol);
 };
-
-
 
 async function getTokenData(tickerList){
     const response = await fetch("https://api.1inch.exchange/v4.0/1/tokens");
@@ -55,8 +53,8 @@ async function formSubmitted(event){
 
 //Ready for implementing Web3 functionality with ethersjs
 // @dev visit https://docs.ethers.io/v5/ for more
-
-async function login(callback) {
+let provider, signer, instance, user, address;
+async function login() {
     //Initial setup
     provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
