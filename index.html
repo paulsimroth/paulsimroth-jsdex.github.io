@@ -49,16 +49,16 @@
             <div class="row">
                 <div class="col-12 col-md-6 mb-2">
                     <label>
-                        <span class="js-from-token"></span>        
+                        <select class="from-token"></select>        
                         Amount:
-                        <input type="text" name="from-amount" class="js-from-amount" disabled/>
+                        <input type="text" name="from-amount" class="js-from-amount"/>
                     </label>
                     <div class="js-amount-error error"></div>
                 </div>
                 <div class="col-12 col-md-6">
                     <label>
-                        Swap to
-                        <select name="to-token"></select>
+                        Swap to:
+                        <select class="to-token"></select>
                     </label>
                 </div>
                 
@@ -66,7 +66,7 @@
 
             <div class="row">
                 <div class="col">
-                    <button type="submit" class="js-submit btn btn-success btn-sm" disabled>Get Quote</button>
+                    <button type="submit" class="js-submit-quote btn btn-success btn-sm" disabled>Get Quote</button>
                     <button class="js-cancel btn btn-warning btn-sm" disabled>Cancel</button>
                 </div>
                 
