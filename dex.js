@@ -1,3 +1,5 @@
+//Top coins get fetched from Coinpaprika
+//Number can be determined in tokens.filter
 async function getTopTokens(){
     const response = await fetch("https://api.coinpaprika.com/v1/coins");
     const tokens = await response.json();
@@ -17,6 +19,7 @@ async function getTokenData(tickerList){
     return tokenList.filter(token => tickerList.includes(token.symbol));
 };
 
+//data gets added to <select> on the page
 function renderForm(tokens){
     const options = tokens.map(token => 
         `<option value="${token.decimals}-${token.address}">${token.name} (${token.symbol})</option>`)
@@ -28,6 +31,7 @@ function renderForm(tokens){
     document.querySelector(".js-submit-quote").removeAttribute("disabled");
 };
 
+//Form submit to get quote with conversion rate
 async function formSubmitted(event){
     event.preventDefault();
 
@@ -36,7 +40,7 @@ async function formSubmitted(event){
     const [fromDecimals, fromAddress] = fromToken.split("-");
     const [toDecimals, toAddress] = toToken.split("-");
     const fromUnit = 10 ** fromDecimals;
-    const decimalRatio = 10 ** (toDecimals -fromDecimals);
+    const decimalRatio = 10 ** (toDecimals - fromDecimals);
 
     const url = `https://api.1inch.io/v5.0/1/quote?fromTokenAddress=${fromAddress}&toTokenAddress=${toAddress}&amount=${fromUnit}`;
     
@@ -46,17 +50,25 @@ async function formSubmitted(event){
         const exchange_rate = Number(quote.toTokenAmount) / Number(quote.fromTokenAmount) * decimalRatio;
 
         document.querySelector(".js-quote-container").innerHTML = `
+            <h2>Conversion rate: </h2>
             <p>1 ${quote.fromToken.symbol} -> ${exchange_rate} ${quote.toToken.symbol}</p>
             <p>Gas fee: ${quote.estimatedGas}</p>
         `;
     } catch(e){
-        document.querySelector(".js-quote-container").innerHTML = `Conversion failed!`;
+        document.querySelector(".js-quote-container").innerHTML = `<h2>Conversion failed!</h2> <p>Try again</p>`;
     }
 };
+
+//Eventlistener for formSubmitted
+document
+    .querySelector(".js-submit-quote")
+    .addEventListener("click", formSubmitted);
 
 //Ready for implementing Web3 functionality with ethersjs
 // @dev visit https://docs.ethers.io/v5/ for more
 let provider, signer, instance, user, address;
+
+//login
 async function login() {
     //Initial setup
     provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -72,6 +84,8 @@ async function login() {
     */
 };
 
+//Connect Button functionality
+//Button shows address after login function is completed
 const walletButton = document.querySelector('#btn-login');
 
 walletButton.addEventListener('click', async() => {
@@ -85,11 +99,7 @@ walletButton.addEventListener('click', async() => {
     };
 });
 
-document
-    .querySelector(".js-submit-quote")
-    .addEventListener("click", formSubmitted);
-
+//Function execution
 getTopTokens()
     .then(getTokenData)
     .then(renderForm);
-    
