@@ -7,7 +7,7 @@ async function getTopTokens(){
     const tableBody = tokens
         .filter(token => token.rank >= 1 && token.rank <= 30)
         .map((token) => `
-    <tr>
+    <tr align="center">
         <td>${token.rank}</td>
         <td>${token.name}</td>
         <td>${token.symbol}</td>
@@ -54,20 +54,20 @@ async function formSubmitted(event){
     const decimalRatio = 10 ** (fromDecimals - toDecimals);
 
     const url = `https://api.1inch.io/v5.0/1/quote?fromTokenAddress=${fromAddress}&toTokenAddress=${toAddress}&amount=${fromUnit}`;
-    
+
     try{
         const response = await fetch(url);
         const quote = await response.json();
         const exchange_rate = Number(quote.toTokenAmount) / Number(quote.fromTokenAmount) * decimalRatio;
 
         document.querySelector(".js-quote-container").innerHTML = `
-            <h2>Conversion rate: </h2>
+            <h2 class="success">Conversion rate: </h2>
             <p>1 ${quote.fromToken.symbol} = ${exchange_rate} ${quote.toToken.symbol}</p>
             <p>estimated Gas fee: ${quote.estimatedGas}</p>
         `;
     } catch(e){
         document.querySelector(".js-quote-container").innerHTML = `
-            <h2>Conversion failed!</h2> 
+            <h2 class="error">Conversion failed!</h2> 
             <p>Try again</p>
             <p>ERROR: ${e}</p>
         `;

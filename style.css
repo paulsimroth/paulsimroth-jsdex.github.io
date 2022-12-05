@@ -2,6 +2,10 @@
     color: darkred;
 }
 
+.success {
+    color: rgb(20, 145, 26);
+}
+
 body {
     background-color: black;
     color: whitesmoke;
@@ -12,12 +16,15 @@ body {
 }
 
 .table {
-    width: 90vw;
+    width: 600px;
+    top: 25vh;
+    left: 3vw;
 }
 
 .exchange-form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin-left: 4rem;
 }

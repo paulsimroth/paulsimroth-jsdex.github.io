@@ -37,39 +37,38 @@
                 <div class="col-12 col-md-6 mb-2">
                     <label>
                         Swap from:
-                        <select class="from-token"></select>
+                        <select class="from-token form-select form-select-sm"></select>
                     </label>
                 </div>
                 <div class="col-12 col-md-6 mb-2">              
                         Amount:
-                        <input type="text" name="from-amount" class="js-from-amount"/>
+                        <input type="text" name="from-amount" class="js-from-amount input-group mb-3"/>
                     </label>
                     <div class="js-amount-error error"></div>
                 </div>
                 <div class="col-12 col-md-6">
                     <label>
                         Swap to:
-                        <select class="to-token"></select>
+                        <select class="to-token form-select form-select-sm"></select>
                     </label>
                 </div>
                 
             </div>
-
+            <br/>
             <div class="row">
                 <div class="col">
                     <button type="submit" class="js-submit-quote btn btn-success btn-sm" disabled>Get Quote</button>
                     <button class="js-cancel btn btn-warning btn-sm" disabled>Cancel</button>
                 </div>
-                
             </div>
 
             <div class="js-quote-container"></div>
         </form>
-        
-        <table class="table table-dark table-striped">
+
+        <table class="table table-dark table-striped" align="center">
             <thead>
-                <h2>Top Coins</h2>
-                <tr>
+                <h2 align="center">Top Coins</h2>
+                <tr align="center">
                     <th>#</th>
                     <th>Name</th>
                     <th>Symbol</th>
@@ -77,8 +76,6 @@
             </thead>
             <tbody class="js-token-balances"></tbody>
         </table>
-
-
 
     </div>
 
