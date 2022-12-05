@@ -3,17 +3,28 @@
 async function getTopTokens(){
     const response = await fetch("https://api.coinpaprika.com/v1/coins");
     const tokens = await response.json();
-/*     console.log("API response", tokens); */
+
+    const tableBody = tokens
+        .filter(token => token.rank >= 1 && token.rank <= 30)
+        .map((token) => `
+    <tr>
+        <td>${token.rank}</td>
+        <td>${token.name}</td>
+        <td>${token.symbol}</td>
+        </tr>
+    `).join("");
+
+    document.querySelector(".js-token-balances").innerHTML = tableBody;
 
     return tokens
         .filter(token => token.rank >= 1 && token.rank <= 30)
-        .map(token => token.symbol);
+        .map(token => token.symbol); 
 };
 
 async function getTokenData(tickerList){
     const response = await fetch("https://api.1inch.exchange/v5.0/1/tokens");
     const tokens = await response.json();
-/*     console.log("Response, getTokeData", tokens); */
+
     const tokenList = Object.values(tokens.tokens);
 
     return tokenList.filter(token => tickerList.includes(token.symbol));
@@ -24,8 +35,8 @@ function renderForm(tokens){
     const options = tokens.map(token => 
         `<option value="${token.decimals}-${token.address}">${token.name} (${token.symbol})</option>`)
     
-    /* console.log("renderForm", options); */
-    
+
+
     document.querySelector(".from-token").innerHTML = options;
     document.querySelector(".to-token").innerHTML = options;
     document.querySelector(".js-submit-quote").removeAttribute("disabled");
@@ -90,16 +101,16 @@ async function login() {
 
 //Connect Button functionality
 //Button shows address after login function is completed
-const walletButton = document.querySelector('#btn-login');
+const $walletButton = document.querySelector('#btn-login');
 
-walletButton.addEventListener('click', async() => {
+$walletButton.addEventListener('click', async() => {
     //Will Start the metamask extension
     if (window.ethereum) { 
-        walletButton.innerHTML = "Connecting";
+        $walletButton.innerHTML = "Connecting";
         await login();
-        walletButton.innerHTML = address;
+        $walletButton.innerHTML = address;
     } else {
-        walletButton.innerHTML = "FAILED TO CONNECT WEB3; Install Web3 Provider!";
+        $walletButton.innerHTML = "FAILED TO CONNECT WEB3; Install Web3 Provider!";
     };
 });
 
