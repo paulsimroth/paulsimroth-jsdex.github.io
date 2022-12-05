@@ -11,6 +11,10 @@ body {
     margin: 8px;
 }
 
+.table {
+    width: 90vw;
+}
+
 .exchange-form {
     display: flex;
     flex-direction: column;

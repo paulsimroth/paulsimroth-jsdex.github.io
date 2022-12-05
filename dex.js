@@ -3,7 +3,7 @@
 async function getTopTokens(){
     const response = await fetch("https://api.coinpaprika.com/v1/coins");
     const tokens = await response.json();
-    console.log("API response", tokens);
+/*     console.log("API response", tokens); */
 
     return tokens
         .filter(token => token.rank >= 1 && token.rank <= 30)
@@ -13,7 +13,7 @@ async function getTopTokens(){
 async function getTokenData(tickerList){
     const response = await fetch("https://api.1inch.exchange/v5.0/1/tokens");
     const tokens = await response.json();
-    console.log("Response, getTokeData", tokens);
+/*     console.log("Response, getTokeData", tokens); */
     const tokenList = Object.values(tokens.tokens);
 
     return tokenList.filter(token => tickerList.includes(token.symbol));
@@ -24,7 +24,7 @@ function renderForm(tokens){
     const options = tokens.map(token => 
         `<option value="${token.decimals}-${token.address}">${token.name} (${token.symbol})</option>`)
     
-    console.log("renderForm", options);
+    /* console.log("renderForm", options); */
     
     document.querySelector(".from-token").innerHTML = options;
     document.querySelector(".to-token").innerHTML = options;
@@ -40,7 +40,7 @@ async function formSubmitted(event){
     const [fromDecimals, fromAddress] = fromToken.split("-");
     const [toDecimals, toAddress] = toToken.split("-");
     const fromUnit = 10 ** fromDecimals;
-    const decimalRatio = 10 ** (toDecimals - fromDecimals);
+    const decimalRatio = 10 ** (fromDecimals - toDecimals);
 
     const url = `https://api.1inch.io/v5.0/1/quote?fromTokenAddress=${fromAddress}&toTokenAddress=${toAddress}&amount=${fromUnit}`;
     
@@ -51,11 +51,15 @@ async function formSubmitted(event){
 
         document.querySelector(".js-quote-container").innerHTML = `
             <h2>Conversion rate: </h2>
-            <p>1 ${quote.fromToken.symbol} -> ${exchange_rate} ${quote.toToken.symbol}</p>
-            <p>Gas fee: ${quote.estimatedGas}</p>
+            <p>1 ${quote.fromToken.symbol} = ${exchange_rate} ${quote.toToken.symbol}</p>
+            <p>estimated Gas fee: ${quote.estimatedGas}</p>
         `;
     } catch(e){
-        document.querySelector(".js-quote-container").innerHTML = `<h2>Conversion failed!</h2> <p>Try again</p>`;
+        document.querySelector(".js-quote-container").innerHTML = `
+            <h2>Conversion failed!</h2> 
+            <p>Try again</p>
+            <p>ERROR: ${e}</p>
+        `;
     }
 };
 
