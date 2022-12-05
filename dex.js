@@ -19,7 +19,7 @@ async function getTokenData(tickerList){
 
 function renderForm(tokens){
     const options = tokens.map(token => 
-        `<option value="${token.decimals} - ${token.address}">${token.name} (${token.symbol})</option>`)
+        `<option value="${token.decimals}-${token.address}">${token.name} (${token.symbol})</option>`)
     
     console.log("renderForm", options);
     
@@ -46,7 +46,7 @@ async function formSubmitted(event){
         const exchange_rate = Number(quote.toTokenAmount) / Number(quote.fromTokenAmount) * decimalRatio;
 
         document.querySelector(".js-quote-container").innerHTML = `
-            <p>${quote.fromToken.symbol} -> ${exchange_rate} ${quote.toToken.symbol}</p>
+            <p>1 ${quote.fromToken.symbol} -> ${exchange_rate} ${quote.toToken.symbol}</p>
             <p>Gas fee: ${quote.estimatedGas}</p>
         `;
     } catch(e){
