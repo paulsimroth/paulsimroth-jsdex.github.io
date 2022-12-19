@@ -10,9 +10,9 @@ It also features a MetaMask login, but there is no further Web3 functionality ad
 
 ## Technology Stack & Tools
 
-- Solidity (Writing Smart Contract)
-- Javascript (React & Testing)
-- [Ethers](https://docs.ethers.io/v5/) (Blockchain Interaction)
+- Javascript
+- Coinpaprika API
+- 1Inch API
 
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
