@@ -1,4 +1,4 @@
-# paulsimroth.github.io/jsdex_frontend/
+# JavaScript DEX Frontend
 
 This DEX Frontend was built as part of the course "Javascript for Blockchain Developers"at Moralis Academy.
 It was built using the Coinpaprika API for getting data on the top ranked coins.
@@ -8,6 +8,13 @@ Furthermore, druing the first version, we made use of the servers provided by Mo
 As Moralis Server V1 is now deprecated I reworked this project. Now it shows the top coins and also gives you the ability to get quotes on the exchange rates between tokens. 
 It also features a MetaMask login, but there is no further Web3 functionality added currently.
 
+## Technology Stack & Tools
+
+- Solidity (Writing Smart Contract)
+- Javascript (React & Testing)
+- [Ethers](https://docs.ethers.io/v5/) (Blockchain Interaction)
+
+## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
